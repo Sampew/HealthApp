@@ -1,29 +1,27 @@
-import React, { useState,useEffect, useLayoutEffect } from "react";
+import React, { useState,useEffect } from "react";
 import {StyleSheet, View, Text, BackHandler, ScrollView, TextInput, TouchableOpacity} from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function DailyActivityScreen({route, navigation}){
 
-    const [message, setMessage] = useState('Testing')
     const [items, setItems] = useState([
     ]);
     const [newItemText, setNewItemText] = useState('')
 
     const addItem = () => {
         if (newItemText.trim() === '') {
-          return; // Don't add empty items
+          return;
         }
       
         const newItem = {
-          id: items.length + 1, // Generate a unique ID
+          id: items.length + 1,
           text: newItemText,
           checked: false,
         };
       
         const updatedItems = [...items, newItem];
-      
-        // Save the updated items to AsyncStorage
+
         AsyncStorage.setItem('items', JSON.stringify(updatedItems))
           .then(() => {
             setItems(updatedItems);
@@ -37,7 +35,6 @@ export default function DailyActivityScreen({route, navigation}){
       const deleteItem = (itemId) => {
         const updatedItems = items.filter((item) => item.id !== itemId);
         
-        // Save the updated items to AsyncStorage
         AsyncStorage.setItem('items', JSON.stringify(updatedItems))
           .then(() => {
             setItems(updatedItems);
@@ -48,7 +45,7 @@ export default function DailyActivityScreen({route, navigation}){
       };
       
       useEffect(() => {
-        // Load saved items from AsyncStorage
+
         const loadItems = async () => {
           try {
             const savedItemsJSON = await AsyncStorage.getItem('items');
@@ -92,7 +89,6 @@ export default function DailyActivityScreen({route, navigation}){
       }));
       setItems(updatedItems);
     
-      // Update AsyncStorage with the new item states
       AsyncStorage.setItem('items', JSON.stringify(updatedItems))
         .then(() => {
           console.log('All items unchecked.');
@@ -144,7 +140,7 @@ export default function DailyActivityScreen({route, navigation}){
         </TouchableOpacity>
         <Text style={[styles.infoText, { textAlign: 'center' }]}>Add your daily activities to the list and check the checkbox when you have completed the task.
         {'\n'}
-        Press uncheck all every morning to reset the checkboxes</Text>
+        Press "Uncheck all" every morning to reset the checkboxes</Text>
       </View>
     </ScrollView>
   </View>
@@ -156,13 +152,13 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     checkboxContainer: {
-        flexDirection: 'row', // To align checkboxes horizontally
-        alignItems: 'center', // To vertically center the checkboxes
-        marginBottom: 10, // Adjust as needed to add spacing between checkboxes
+        flexDirection: 'row', 
+        alignItems: 'center',
+        marginBottom: 10, 
         justifyContent: 'center'
       },
       checkboxLabel: {
-        marginLeft: 10, // Adjust as needed to add space between checkbox and text
+        marginLeft: 10,
       },
       button: {
         backgroundColor: '#0782F9',
@@ -203,16 +199,16 @@ const styles = StyleSheet.create({
         width: 24,
         height: 24,
         borderWidth: 1,
-        borderColor: 'blue', // Border color for unchecked checkbox
+        borderColor: 'blue',
         borderRadius: 4,
         justifyContent: 'center',
         alignItems: 'center',
       },
       checked: {
-        backgroundColor: 'blue', // Background color for checked checkbox
-        borderColor: 'blue',    // Border color for checked checkbox
+        backgroundColor: 'blue', 
+        borderColor: 'blue',   
       },
       unchecked: {
-        backgroundColor: 'white', // Background color for unchecked checkbox
+        backgroundColor: 'white',
       },
 })

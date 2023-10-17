@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useState, useEffect} from "react";
-import {StyleSheet, Button, View, Text, TextInput, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { auth, quotesCollection } from "./firebase";
 import { useNavigation } from "@react-navigation/native";
@@ -37,7 +37,7 @@ export default function HomeScreen({navigation}){
 
     const fetchQuotes = async () => {
         const snapshot = await quotesCollection.get();
-        const quotes = snapshot.docs.map(doc => doc.data().text);  // Assume each quote document has a field named 'text'
+        const quotes = snapshot.docs.map(doc => doc.data().text);
         return quotes;
       };
     
@@ -56,22 +56,6 @@ export default function HomeScreen({navigation}){
         fetchAndSetQuote();
       }, []);
 
-    /*const [quote, setQuote] = useState('');
-         const quotes = [
-        "The only way to do great work is to love what you do.",
-        "In the middle of every difficulty lies opportunity. ",
-        "Success is not final, failure is not fatal: It is the courage to continue that counts.",
-    ];
-    const getRandomQuote = () => {
-        const randomIndex = Math.floor(Math.random() * quotes.length);
-        return quotes[randomIndex];
-    };
-
-  useEffect(() => {
-    const randomQuote = getRandomQuote();
-    setQuote(randomQuote);
-  }, []);
-*/
     return (
         <View style={styles.container}>
             <View style={styles.quotes}>
@@ -97,7 +81,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-      },
+    },
     navButton: {
         marginRight: 5,
         padding: 4,
@@ -110,13 +94,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 40,
         justifyContent: 'center'
-      },
-      buttonText: {
+    },
+    buttonText: {
         color: 'white',
         fontWeight: '700',
         fontSize: 16,
-      },
-      textBackground: {
+    },
+    textBackground: {
         backgroundColor: 'grey',
         padding: 10, 
         borderRadius: 5, 
